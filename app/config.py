@@ -3,24 +3,20 @@
 DSN - Data Source Name.
 """
 from functools import lru_cache
-
 from dotenv import find_dotenv
-from providers_common.aliases import StrictStandardString
-from pydantic import AmqpDsn, BaseSettings, Field, PostgresDsn
 
-from seatch_test.app.aliases import ApiKeyName, ProviderApiKeys
-from seatch_test.app.constants import API_KEY_NAME as KEY_NAME
+from pydantic import BaseSettings, Field, PostgresDsn
 
 
 class Settings(BaseSettings):
     """Конфиг приложения."""
 
     PERSISTENCE_DSN: PostgresDsn = Field(title='DSN для доступа к базе данных')
-    AMQP_DSN: AmqpDsn = Field(title='DSN для доступа к очереди сообщений')
-    PROVIDER_API_KEYS: ProviderApiKeys = Field(title='API ключи для провайдеров')
-    API_KEY_NAME: ApiKeyName = Field(default=KEY_NAME, title='Наименование API ключа')
-    HTTP_BASIC_USERNAME: StrictStandardString = Field(title='Имя для Http Basic Auth')
-    HTTP_BASIC_PASSWORD: StrictStandardString = Field(title='Пароль для Http Basic Auth')
+    # AMQP_DSN: AmqpDsn = Field(title='DSN для доступа к очереди сообщений')
+    # PROVIDER_API_KEYS: ProviderApiKeys = Field(title='API ключи для провайдеров')
+    # API_KEY_NAME: ApiKeyName = Field(default=KEY_NAME, title='Наименование API ключа')
+    # HTTP_BASIC_USERNAME: StrictStandardString = Field(title='Имя для Http Basic Auth')
+    # HTTP_BASIC_PASSWORD: StrictStandardString = Field(title='Пароль для Http Basic Auth')
 
 
 class SettingsFromFile(Settings):
@@ -46,6 +42,6 @@ def get_settings() -> Settings:
     """
     try:
         find_dotenv(filename='.env', raise_error_if_not_found=True)
-    except OSError:
+    except Exception as f:
         return Settings()
     return SettingsFromFile()

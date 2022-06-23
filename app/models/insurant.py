@@ -1,6 +1,5 @@
+from app.models.base import BaseModel
 from sqlalchemy import Column, Integer, String
-
-from seatch_test.app.models.base import BaseModel
 
 
 class Insurant(BaseModel):
@@ -10,3 +9,7 @@ class Insurant(BaseModel):
 
     id = Column(Integer, primary_key=True)
     inn = Column(String)
+    fst_name = Column(String)
+    lst_name = Column(String)
+    mid_name = Column(String)
+    birth_date = Column(String)
